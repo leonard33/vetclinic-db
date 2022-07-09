@@ -42,3 +42,33 @@ SELECT species, MAX(weight_kg) AS maximum_weight, MIN(weight_kg) AS minimum_weig
 
 SELECT species, ROUND(AVG(escape_attempts), 2) AS average_escape_attempts FROM animals WHERE date_of_birth >= '1990-01-01' AND date_of_birth < '2000-12-31' GROUP BY species;
 
+UPDATE animals SET species_id = 2 WHERE name LIKE '%mon';
+UPDATE animals SET species_id = 1 WHERE species_id IS NULL;
+
+UPDATE animals SET owner_id = 1 WHERE name LIKE 'Agumon';
+
+UPDATE animals SET owner_id = 2 WHERE name LIKE 'Gabumon' OR name LIKE 'Pikachu';
+
+UPDATE animals SET owner_id = 3 WHERE name LIKE 'Devimon' OR name LIKE 'Plantmon';
+
+UPDATE animals SET owner_id = 4 WHERE name LIKE 'Charmander' OR name LIKE 'Squirtle' OR name LIKE 'Blossom';
+
+UPDATE animals SET owner_id = 5 WHERE name LIKE 'Angemon' OR name LIKE 'Boarmon';
+
+SELECT full_name, name FROM owner JOIN animals ON owner.id = animals.owner_id WHERE full_name = 'Melody Pond';
+
+SELECT A.name AS ANIMALS_NAMES , S.name AS SPECIES_NAMES FROM species S JOIN animals A ON S.id = A.species_id WHERE S.name = 'Pokemon';
+
+SELECT O.full_name AS owner, A.name AS ANIMALS_NAMES FROM Owner O LEFT JOIN animals A ON O.id = A.owner_id;
+
+-- how many animals are there in each species?
+SELECT S.name AS SPECIES_NAMES, COUNT(A.name) AS ANIMALS_COUNT FROM species S LEFT JOIN animals A ON S.id = A.species_id GROUP BY S.name;
+
+-- list all Digimon owned by Jeniffer Orwell
+SELECT O.full_name AS owner, A.name AS ANIMALS_NAMES FROM Owner O LEFT JOIN animals A ON O.id = A.owner_id WHERE O.full_name = 'Jeniffer Orwell' AND A.name = 'digimon';
+
+-- List all animals owned by Dean Winchester that haven't tried to escape
+SELECT O.full_name AS owner, A.name AS ANIMALS_NAMES FROM Owner O LEFT JOIN animals A ON O.id = A.owner_id WHERE O.full_name = 'Dean Winchester' AND A.escape_attempts = 0;
+
+-- Who owns the most animals?
+SELECT O.full_name AS owner, COUNT(A.name) AS ANIMALS_COUNT FROM Owner O LEFT JOIN animals A ON O.id = A.owner_id GROUP BY O.full_name ORDER BY ANIMALS_COUNT DESC;
