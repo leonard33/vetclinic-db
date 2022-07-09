@@ -24,3 +24,20 @@ name VARCHAR(250)
 ALTER TABLE animals ADD COLUMN species_id INT;
 
 ALTER TABLE animals ADD COLUMN owner_id INT;
+
+CREATE TABLE vets ( id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+name VARCHAR(250),
+age INT,
+date_of_graduation DATE
+);
+
+CREATE TABLE specializations (
+    species_id int,
+    vets_id int
+);
+
+CREATE TABLE visits (
+    animals_id int,
+    vets_id int,
+    date_of_visits date 
+);
