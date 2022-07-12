@@ -86,3 +86,9 @@ select vets.name,COUNT(visits.vets_id) as visit,COUNT(species.name) as specializ
 
 -- What specialty should Maisy Smith consider getting? Look for the species she gets the most.
 select vets.name,species.name from vets INNER JOIN specializations ON vets.id!=specializations.vets_id JOIN species ON species.id !=specializations.species_id where vets.name='Maisy Smith' LIMIT 1;
+
+EXPLAIN ANALYZE SELECT COUNT(*) FROM visits where animals_id = 4;
+
+EXPLAIN ANALYZE SELECT * FROM visits where vets_id = 2;
+
+EXPLAIN ANALYZE SELECT * FROM owner where email = 'owner_18327@mail.com';
